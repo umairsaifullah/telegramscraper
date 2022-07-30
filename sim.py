@@ -186,8 +186,8 @@ for s in range(v):
         n += 1
         if n % 20 == 0:
             info()
-            print (y+' waiting for 10 seconds to avoid flooding....')
-            Sleep(10)  
+            print (y+' waiting for 30 seconds to avoid flooding....')
+            Sleep(30)  
         elif q>= 9:
             client.disconnect()
             if x<v:             
@@ -199,7 +199,7 @@ for s in range(v):
                 Sleep(1)
                 sys.exit()
         if user['id'] in my_participants_id:
-            print(a+' User already present,skipping...')
+            print(a+' User already present,skipping... waiting 10s')
             n-=1
             with open('Members.csv', 'r',encoding='UTF-8') as f:
                 dat = csv.reader(f,delimiter=",",lineterminator="\n")
@@ -207,7 +207,7 @@ for s in range(v):
                     if usR in tad:
                         lines.remove(tad)
                         break
-            Sleep(1)       
+            Sleep(10)       
             continue
         else:
             try:
@@ -217,7 +217,7 @@ for s in range(v):
                         continue
                 user_to_add = client.get_input_entity(user['username'])
                 client(InviteToChannelRequest(target_group_entity,[user_to_add]))
-                print(m+" Waiting for 2-4 Seconds...")
+                print(m+" Waiting for 2-20 Seconds...")
                 with open('Members.csv', 'r',encoding='UTF-8') as f:
                     dat = csv.reader(f,delimiter=",",lineterminator="\n")
                     for tad in dat:
@@ -229,12 +229,12 @@ for s in range(v):
                     for line in lines:
                         writer.writerow(line)        
                              
-                time.sleep(random.randrange(2,4))
+                time.sleep(random.randrange(2,20))
                 
                 q=0
             except PeerFloodError:
                 print(r+' Getting Flood Error from telegram. Script is stopping now. Please try again after some time.')
-                Sleep(1)
+                Sleep(60)
                 q+= 1
             except UserPrivacyRestrictedError:
                 print(r+' The user\'s privacy settings do not allow you to do this. Skipping.')
@@ -270,7 +270,7 @@ for s in range(v):
                         if usR in tad:
                             lines.remove(tad)
                             break
-                Sleep(1)
+                Sleep(30)
             except UserNotMutualContactError:
                 print(r+' Mutual No. Skipped.')
                 with open('Members.csv', 'r',encoding='UTF-8') as f:
